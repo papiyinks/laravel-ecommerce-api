@@ -50,6 +50,15 @@ class UserTest extends TestCase
     }
 
     /** @test */
+    function a_user_can_logout()
+    {
+        $header = $this->signIn();
+
+        $this->json('post', '/api/logout', [], $header)
+            ->assertStatus(200);
+    }
+
+    /** @test */
     function a_user_registration_requires_a_firstname()
     {
         $this->publishUser(['firstname' => null])

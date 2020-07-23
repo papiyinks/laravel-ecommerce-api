@@ -18,7 +18,15 @@ class AuthController extends Controller
 
     public function register()
     {
-        $user = $this->user_repository->createUser();
+        $attributes = request()->validate([
+            'firstname' => 'required|string',
+            'lastname' => 'required|string',
+            'phoneNumber' => 'required|digits:11',
+            'email' => 'required|string|email|unique:users',
+            'password' => 'required|string'
+        ]);
+
+        $user = $this->user_repository->createUser($attributes);
 
         $token = $this->createAccessToken($user);
 
@@ -30,9 +38,12 @@ class AuthController extends Controller
 
     public function login()
     {
-        $loginData = $this->user_repository->loginUser();
+        $attributes = request()->validate([
+            'email' => 'required|string|email',
+            'password' => 'required|string',
+        ]);
 
-        if(!Auth::attempt($loginData))
+        if(!Auth::attempt($attributes))
             return response()->json([
                 'message' => 'Unauthorized'
             ], 401);

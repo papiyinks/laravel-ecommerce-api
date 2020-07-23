@@ -3,7 +3,6 @@
 namespace App\Data\Repositories\Product;
 
 use App\Product;
-use Illuminate\Support\Facades\Auth;
 
 /**
  * Class EloquentRepository
@@ -11,48 +10,30 @@ use Illuminate\Support\Facades\Auth;
  */
 class EloquentRepository implements ProductRepository
 {
-    /**
-     * @return mixed
-     */
-    public function createProduct()
+    protected $product;
+
+    public function __construct(Product $product)
     {
-        request()->validate([
-            'name' => 'required|string',
-            'brand' => 'required|string',
-            'price' => 'required|numeric',
-            'image' => 'required|string',
-            'description' => 'required|string'
-        ]);
+       $this->product = $product;
+    }
 
-        $product = Product::create([
-            'owner_id' => Auth::id(),
-            'name' => request('name'),
-            'brand' => request('brand'),
-            'price' => request('price'),
-            'image' => request('image'),
-            'description' => request('description'),
-        ]);
-
-        return $product;
+    public function createProduct($attributes)
+    {
+        return $this->product->create($attributes);
     }
 
     public function getAllProducts()
     {
-        $products = Product::all();
-
-        return $products;
+        return $this->product->all();
     }
 
-    public function updateAProduct()
+    public function updateAProduct($product, $attributes)
     {
-        $data = request()->validate([
-            'name' => 'required|string',
-            'brand' => 'required|string',
-            'price' => 'required|numeric',
-            'image' => 'required|string',
-            'description' => 'required|string'
-        ]);
+        return $product->update($attributes);
+    }
 
-        return $data;
+    public function deleteAProduct($product)
+    {
+        return $product->delete();
     }
 }

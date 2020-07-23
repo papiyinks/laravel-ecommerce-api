@@ -18,7 +18,7 @@ class ProductTest extends TestCase
     }
 
     /** @test */
-    public function a_thread_has_an_owner()
+    public function a_product_has_an_owner()
     {
         $product = create('App\Product');
 

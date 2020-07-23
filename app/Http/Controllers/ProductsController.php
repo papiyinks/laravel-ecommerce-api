@@ -27,7 +27,17 @@ class ProductsController extends Controller
 
     public function store()
     {
-        $product = $this->product_repository->createProduct();
+        $attributes = request()->validate([
+            'name' => 'required|string',
+            'brand' => 'required|string',
+            'price' => 'required|numeric',
+            'image' => 'required|string',
+            'description' => 'required|string'
+        ]);
+
+        $attributes['owner_id'] = auth()->id();
+
+        $product = $this->product_repository->createProduct($attributes);
 
         return response()->json([
             'product' => $product,
@@ -45,9 +55,15 @@ class ProductsController extends Controller
     {
         $this->authorize('update', $product);
 
-        $data = $this->product_repository->updateAProduct();
+        $attributes = request()->validate([
+            'name' => 'required|string',
+            'brand' => 'required|string',
+            'price' => 'required|numeric',
+            'image' => 'required|string',
+            'description' => 'required|string'
+        ]);
 
-        $product->update($data);
+        $this->product_repository->updateAProduct($product, $attributes);
 
         return response()->json([
             'product' => $product,
@@ -58,7 +74,7 @@ class ProductsController extends Controller
     {
         $this->authorize('update', $product);
 
-        $product->delete();
+        $this->product_repository->deleteAProduct($product);
 
         return response()->json([
             'message' => 'Product deleted successfully',

@@ -41,6 +41,11 @@ class UserTest extends TestCase
             'password' => 'toptal123',
         ];
 
+        $this->post(route('login'), [
+            'email' => 'john@topl.com',
+            'password' => 'topt123',
+        ])->assertStatus(401);
+
         $this->post(route('login'), $attributes)
             ->assertStatus(201)
             ->assertJson([

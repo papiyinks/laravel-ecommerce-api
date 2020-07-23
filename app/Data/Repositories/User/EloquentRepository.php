@@ -3,6 +3,7 @@
 namespace App\Data\Repositories\User;
 
 use App\User;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * Class EloquentRepository
@@ -10,41 +11,20 @@ use App\User;
  */
 class EloquentRepository implements UserRepository
 {
-    /**
-     * @return mixed
-     */
-    public function createUser()
-    {
-        request()->validate([
-            'firstname' => 'required|string',
-            'lastname' => 'required|string',
-            'phoneNumber' => 'required|digits:11',
-            'email' => 'required|string|email|unique:users',
-            'password' => 'required|string'
-        ]);
+    protected $user;
 
-        $user = new User([
-            'firstname' => request()->firstname,
-            'lastname' => request()->lastname,
-            'phoneNumber' => request()->phoneNumber,
-            'email' => request()->email,
-            'password' => bcrypt(request()->password)
-        ]);
+    public function __construct(User $user)
+    {
+       $this->user = $user;
+    }
+
+    public function createUser($attributes)
+    {
+
+        $user = new User($attributes);
 
         $user->save();
 
         return $user;
-    }
-
-    public function loginUser()
-    {
-        request()->validate([
-            'email' => 'required|string|email',
-            'password' => 'required|string',
-        ]);
-
-        $credentials = request(['email', 'password']);
-
-        return $credentials;
     }
 }

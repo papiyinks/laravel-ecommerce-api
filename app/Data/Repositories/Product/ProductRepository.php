@@ -11,9 +11,11 @@ interface ProductRepository
     /**
      * @return mixed
      */
-    public function createProduct();
+    public function createProduct($attributes);
 
     public function getAllProducts();
 
-    public function updateAProduct();
+    public function updateAProduct($product, $attributes);
+
+    public function deleteAProduct($product);
 }

@@ -11,7 +11,5 @@ interface UserRepository
     /**
      * @return mixed
      */
-    public function createUser();
-
-    public function loginUser();
+    public function createUser($attributes);
 }

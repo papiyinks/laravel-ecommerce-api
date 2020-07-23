@@ -45,7 +45,8 @@ class CreateProductsTest extends TestCase
 
         $attributes = factory('App\Product')->raw(['name' => '']);
 
-        $this->post('/api/products', $attributes, $headers)->assertSessionHasErrors('name');
+        $this->post('/api/products', $attributes, $headers)
+            ->assertSessionHasErrors('name');
     }
 
     /** @test */
@@ -57,7 +58,8 @@ class CreateProductsTest extends TestCase
 
         $attributes = factory('App\Product')->raw(['brand' => '']);
 
-        $this->post('/api/products', $attributes, $headers)->assertSessionHasErrors('brand');
+        $this->post('/api/products', $attributes, $headers)
+            ->assertSessionHasErrors('brand');
     }
 
     /** @test */

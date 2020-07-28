@@ -63,7 +63,14 @@ class ProductsController extends Controller
             'description' => 'required|string'
         ]);
 
-        $this->product_repository->updateAProduct($product, $attributes);
+        $product->name = $attributes['name'];
+        $product->brand = $attributes['brand'];
+        $product->price = $attributes['price'];
+        $product->image = $attributes['image'];
+        $product->description = $attributes['description'];
+
+
+        $this->product_repository->updateAProduct($product);
 
         return response()->json([
             'product' => $product,

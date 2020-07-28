@@ -11,18 +11,8 @@ use Illuminate\Support\Facades\Auth;
  */
 class EloquentRepository implements UserRepository
 {
-    protected $user;
-
-    public function __construct(User $user)
+    public function createUser($user)
     {
-       $this->user = $user;
-    }
-
-    public function createUser($attributes)
-    {
-
-        $user = new User($attributes);
-
         $user->save();
 
         return $user;

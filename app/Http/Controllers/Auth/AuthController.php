@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Data\Repositories\User\UserRepository;
 use App\Http\Controllers\Controller;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -26,12 +27,16 @@ class AuthController extends Controller
             'password' => 'required|string'
         ]);
 
-        $user = $this->user_repository->createUser($attributes);
+        $attributes['password'] = bcrypt($attributes['password']);
 
-        $token = $this->createAccessToken($user);
+        $user = new User($attributes);
+
+        $createdUser = $this->user_repository->createUser($user);
+
+        $token = $this->createAccessToken($createdUser);
 
         return response()->json([
-            'user' => $user,
+            'user' => $createdUser,
             'token' => $token
         ], 201);
     }

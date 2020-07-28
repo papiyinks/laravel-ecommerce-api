@@ -10,26 +10,21 @@ use App\Product;
  */
 class EloquentRepository implements ProductRepository
 {
-    protected $product;
-
-    public function __construct(Product $product)
-    {
-       $this->product = $product;
-    }
-
     public function createProduct($attributes)
     {
-        return $this->product->create($attributes);
+        return Product::create($attributes);
     }
 
     public function getAllProducts()
     {
-        return $this->product->all();
+        return Product::all();
     }
 
-    public function updateAProduct($product, $attributes)
+    public function updateAProduct($product)
     {
-        return $product->update($attributes);
+        $product->save();
+
+        return $product;
     }
 
     public function deleteAProduct($product)

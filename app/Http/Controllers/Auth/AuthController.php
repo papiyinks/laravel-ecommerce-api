@@ -33,7 +33,7 @@ class AuthController extends Controller
 
         $createdUser = $this->user_repository->createUser($user);
 
-        $token = $this->createAccessToken($createdUser);
+        $token = $user->createAccessToken($createdUser);
 
         return response()->json([
             'user' => $createdUser,
@@ -53,12 +53,14 @@ class AuthController extends Controller
                 'message' => 'Unauthorized'
             ], 401);
 
-        $user = Auth::user();
+        $authorizedUser = Auth::user();
 
-        $token = $this->createAccessToken($user);
+        $user = new User;
+
+        $token = $user->createAccessToken($authorizedUser);
 
         return response()->json([
-            'user' => $user,
+            'user' => $authorizedUser,
             'token' => $token
         ], 201);
     }
@@ -71,9 +73,4 @@ class AuthController extends Controller
             'message' => 'Successfully logged out'
         ]);
     }
-
-    public function createAccessToken($user) {
-        return $user->createToken('Personal Access Token')->accessToken;
-    }
-
 }

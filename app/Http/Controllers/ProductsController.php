@@ -69,7 +69,6 @@ class ProductsController extends Controller
         $product->image = $attributes['image'];
         $product->description = $attributes['description'];
 
-
         $this->product_repository->updateAProduct($product);
 
         return response()->json([

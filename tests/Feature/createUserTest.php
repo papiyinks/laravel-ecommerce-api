@@ -5,12 +5,11 @@ namespace Tests\Feature;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-class UserTest extends TestCase
+class createUserTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @test */
-    function a_guest_can_register()
+    function testAGuestCanRegister()
     {
         $attributes = [
             'firstname' => 'John',
@@ -28,8 +27,7 @@ class UserTest extends TestCase
             ]);
     }
 
-    /** @test */
-    function a_user_can_login()
+    function testAUserCanLogin()
     {
         create('App\User', [
             'email' => 'john@toptal.com',
@@ -54,8 +52,7 @@ class UserTest extends TestCase
             ]);
     }
 
-    /** @test */
-    function a_user_can_logout()
+    function testAUserCanLogout()
     {
         $header = $this->signIn();
 
@@ -63,36 +60,31 @@ class UserTest extends TestCase
             ->assertStatus(200);
     }
 
-    /** @test */
-    function a_user_registration_requires_a_firstname()
+    function testAUserRegistrationRequiresAFirstname()
     {
         $this->publishUser(['firstname' => null])
             ->assertSessionHasErrors('firstname');
     }
 
-    /** @test */
-    function a_user_registration_requires_a_lastname()
+    function testAUserRegistrationRequiresALastname()
     {
         $this->publishUser(['lastname' => null])
             ->assertSessionHasErrors('lastname');
     }
 
-    /** @test */
-    function a_user_registration_requires_a_phone_number()
+    function testAUserRegistrationRequiresAPhoneNumber()
     {
         $this->publishUser(['phoneNumber' => null])
             ->assertSessionHasErrors('phoneNumber');
     }
 
-    /** @test */
-    function a_user_registration_requires_an_email()
+    function testAUserRegistrationRequiresAnEmail()
     {
         $this->publishUser(['email' => null])
             ->assertSessionHasErrors('email');
     }
 
-    /** @test */
-    function a_user_registration_requires_a_password()
+    function testAUserRegistrationRequiresAPassword()
     {
         $this->publishUser(['password' => null])
             ->assertSessionHasErrors('password');

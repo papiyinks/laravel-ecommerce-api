@@ -9,8 +9,7 @@ class UpdateProductsTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @test */
-    function unauthorized_users_may_not_update_product()
+    function testUnauthorizedUsersMayNotUpdateProduct()
     {
         $this->withExceptionHandling();
 
@@ -24,8 +23,7 @@ class UpdateProductsTest extends TestCase
             ->assertStatus(403);
     }
 
-    /** @test */
-    function a_product_can_be_updated_by_its_owner()
+    function testAProductCanBeUpdatedByItsOwner()
     {
         $user = create('App\User');
 

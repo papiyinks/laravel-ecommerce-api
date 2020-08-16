@@ -9,8 +9,7 @@ class CreateProductsTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @test */
-    function guests_may_not_create_threads()
+    function testGuestsMayNotCreateThreads()
     {
         $this->withExceptionHandling();
 
@@ -18,8 +17,7 @@ class CreateProductsTest extends TestCase
             ->assertRedirect('/api/login');
     }
 
-    /** @test */
-    function a_user_can_create_a_product()
+    function testAUserCanCreateAProduct()
     {
         $header = $this->signIn();
 
@@ -36,8 +34,7 @@ class CreateProductsTest extends TestCase
         $this->assertDatabaseHas('products', $attributes);
     }
 
-    /** @test */
-    public function a_product_requires_a_name()
+    public function testAProductRequiresAName()
     {
         $this->withExceptionHandling();
 
@@ -49,8 +46,7 @@ class CreateProductsTest extends TestCase
             ->assertSessionHasErrors('name');
     }
 
-    /** @test */
-    public function a_product_requires_a_brand()
+    public function testAProductRequiresABrand()
     {
         $this->withExceptionHandling();
 
@@ -62,8 +58,7 @@ class CreateProductsTest extends TestCase
             ->assertSessionHasErrors('brand');
     }
 
-    /** @test */
-    public function a_product_requires_a_price()
+    public function testAProducRequiresAPrice()
     {
         $this->withExceptionHandling();
 
@@ -75,8 +70,7 @@ class CreateProductsTest extends TestCase
             ->assertSessionHasErrors('price');
     }
 
-    /** @test */
-    public function a_product_requires_an_image()
+    public function testAProductRequiresAnImage()
     {
         $this->withExceptionHandling();
 
@@ -88,8 +82,7 @@ class CreateProductsTest extends TestCase
             ->assertSessionHasErrors('image');
     }
 
-    /** @test */
-    public function a_product_requires_a_description()
+    public function testAProductRequiresADescription()
     {
         $this->withExceptionHandling();
 
@@ -101,8 +94,7 @@ class CreateProductsTest extends TestCase
             ->assertSessionHasErrors('description');
     }
 
-    /** @test */
-    function unauthorized_users_may_not_delete_product()
+    function testUnauthorizedUsersMayNotDeleteProduct()
     {
         $this->withExceptionHandling();
 
@@ -114,8 +106,7 @@ class CreateProductsTest extends TestCase
             ->assertStatus(403);
     }
 
-    /** @test */
-    function authorized_user_can_delete_product()
+    function testAuthorizedUserCanDeleteProduct()
     {
         $user = create('App\User');
 

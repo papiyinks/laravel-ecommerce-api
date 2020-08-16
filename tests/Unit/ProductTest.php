@@ -9,16 +9,14 @@ class ProductTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @test */
-    public function a_product_has_a_path()
+    public function testAProductHasAPath()
     {
         $product = create('App\Product');
 
         $this->assertEquals("/api/products/{$product->id}", $product->path());
     }
 
-    /** @test */
-    public function a_product_has_an_owner()
+    public function testAProductHasAnOwner()
     {
         $product = create('App\Product');
 

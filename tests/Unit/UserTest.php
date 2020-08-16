@@ -9,7 +9,7 @@ class UserTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function testAUserMayHaveManyProducts()
+    public function testUsersMayHaveManyProducts()
     {
         $user = create('App\User');
 

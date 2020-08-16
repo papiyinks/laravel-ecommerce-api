@@ -55,9 +55,7 @@ class AuthController extends Controller
 
         $authorizedUser = Auth::user();
 
-        $user = new User;
-
-        $token = $user->createAccessToken($authorizedUser);
+        $token = $this->createAccessToken($authorizedUser);
 
         return response()->json([
             'user' => $authorizedUser,
@@ -72,5 +70,9 @@ class AuthController extends Controller
         return response()->json([
             'message' => 'Successfully logged out'
         ]);
+    }
+
+    public function createAccessToken ($user) {
+        return $user->createToken('App Access Token')->accessToken;
     }
 }
